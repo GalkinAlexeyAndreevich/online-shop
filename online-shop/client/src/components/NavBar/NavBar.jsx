@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import { Context } from "../..";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
-import { SHOP_ROUTE } from "../../utils/consts";
+import { NavLink, useNavigate } from "react-router-dom";
+import { LOGIN_ROUTE, SHOP_ROUTE } from "../../utils/consts";
 import { observer } from "mobx-react-lite";
 
 const NavBar = observer(() => {
     const { user } = useContext(Context);
+    const navigate = useNavigate();
     return (
         <Navbar bg="dark" data-bs-theme="dark">
             <Container>
@@ -18,18 +19,31 @@ const NavBar = observer(() => {
                 {user.isAuth ? (
                     <Nav className="ml-auto" style={{ color: "white" }}>
                         <Button variant={"outline-light"}>Админ панель</Button>
-                        <Button variant={"outline-light"} style={{marginLeft:"10px"}}>Выйти</Button>
+                        <Button
+                            variant={"outline-light"}
+                            style={{ marginLeft: "10px" }}
+                            onClick={() => {
+                                user.setIsAuth(false);
+                                navigate(LOGIN_ROUTE)
+                            }}>
+                            Выйти
+                        </Button>
                     </Nav>
                 ) : (
                     <Nav className="ml-auto" style={{ color: "white" }}>
-                        <Button variant={"outline-light"} onClick={()=>{
-                            user.setIsAuth(true)
-                        }}>Авторизация</Button>
+                        <Button
+                            variant={"outline-light"}
+                            onClick={() => {
+                                user.setIsAuth(true);
+                                navigate(SHOP_ROUTE)
+                            }}>
+                            Авторизация
+                        </Button>
                     </Nav>
                 )}
             </Container>
         </Navbar>
     );
-})
+});
 
 export default NavBar;
