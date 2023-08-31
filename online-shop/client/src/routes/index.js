@@ -32,9 +32,5 @@ export const publicRoutes = [
     {
 		Component: <Device/>,
 		path: DEVICE_ROUTE + '/:id',
-	},
-	{
-		Component: <Shop/>,
-		path: '*',
-	},
+	}
 ];

@@ -1,27 +1,15 @@
 import { makeAutoObservable } from "mobx"
-
 export default class DeviceStore {
     constructor(){
-        this._types = [
-            {id:1, name:'Холодильники'},
-            {id:2, name:'Микроволновки'},
-            {id:3, name:'Смартфоны'},
-        ]
-        this._brands = [
-            {id:1, name:'Samsung'},
-            {id:2, name:'Apple'},
-
-        ]
-        this._devices = [
-            {id:1, name:'Iphone 12 pro', price:100000,rating:5},
-            {id:2, name:'Samsung a52', price:20000,rating:5},
-            {id:3, name:'Iphone 12 pro', price:100000,rating:5},
-            {id:4, name:'Samsung a52', price:20000,rating:5},
-            {id:5, name:'Iphone 12 pro', price:100000,rating:5},
-            {id:6, name:'Samsung a52', price:20000,rating:5},
-        ]
+        this._types = []
+        this._brands = []
+        this._devices = []
+        // this._currentDevice = {}
         this._selectedType = {}
         this._selectedBrand = {}
+        this._page = 1
+        this._totalCount = 0
+        this._limit = 5
         makeAutoObservable(this) // При обновлении переменных будет произведен перерендер
     }
 
@@ -35,10 +23,21 @@ export default class DeviceStore {
         this._devices = devices
     }
     setSelectedType(type){
+        this.setPage(1)
         this._selectedType = type
     }
     setSelectedBrand(brand){
+        this.setPage(1)
         this._selectedBrand = brand
+    }
+    setPage(page){
+        this._page = page
+    }
+    setTotalCount(count){
+        this._totalCount = count
+    }
+    setCurrentDevice(device){
+        this._currentDevice = device
     }
 
     get types(){
@@ -57,5 +56,17 @@ export default class DeviceStore {
     }
     get selectedBrand(){
         return this._selectedBrand
+    }
+    get page(){
+        return this._page
+    }
+    get totalCount(){
+        return this._totalCount
+    }
+    get limit(){
+        return this._limit
+    }
+    get currentDevice(){
+        return this._currentDevice
     }
 }

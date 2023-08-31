@@ -6,7 +6,7 @@ import { ApiError } from "../error/apiError.js";
 
 export const create = async (req, res, next) => {
     try {
-        const { name, price, brandId, typeId, info } = req.body;
+        let { name, price, brandId, typeId, info } = req.body;
         const { img } = req.files;
         let fileName = uuidv4() + ".jpg";
 
